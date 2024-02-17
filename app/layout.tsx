@@ -17,15 +17,17 @@ export default function RootLayout({children}: Readonly<{
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
+        <html className='!scroll-smooth' lang="en">
         <body className={GeistSans.className}>
-        <ActiveSectionContextProvider>
-            <Providers>
-                <AnimatedCursor/>
-                <Navbar/>
-                {children}
-            </Providers>
-        </ActiveSectionContextProvider>
+        <Providers>
+            <ActiveSectionContextProvider>
+                <div>
+                    <AnimatedCursor/>
+                    <Navbar/>
+                    {children}
+                </div>
+            </ActiveSectionContextProvider>
+        </Providers>
         </body>
         </html>
     );

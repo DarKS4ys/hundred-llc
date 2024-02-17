@@ -10,7 +10,7 @@ const AnimCursor = () => {
             outerAlpha={0.35}
             innerScale={2.5}
             outerScale={5}
-            color={'24, 160, 200'}
+            color={'24, 160, 230'}
             clickables={[
                 'a',
                 'input[type="text"]',
@@ -22,7 +22,8 @@ const AnimCursor = () => {
                 'select',
                 'textarea',
                 'button',
-                '.link'
+                '.link',
+                '.awesome'
             ]}
         />
     );

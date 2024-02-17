@@ -8,7 +8,7 @@ const Typewriter = () => {
         loop: true
     })
     return (
-        <span className="text-[clamp(48px,11.5vw,80px)] md:text-[5rem] xl:text-[5rem] 2xl:text-[6.5rem] leading-[1] uppercase font-mono">
+        <span className="text-[clamp(48px,11.5vw,80px)] md:text-[5rem] xl:text-[5rem] 2xl:text-[7rem] leading-[1] uppercase font-mono">
             {text}
             <Cursor/>
         </span>

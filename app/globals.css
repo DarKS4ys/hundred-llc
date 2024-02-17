@@ -2,8 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html,body,:root {
+  height: 100%;
+}
+
 @layer base {
   :root {
+    --main: #1B1725;
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
 

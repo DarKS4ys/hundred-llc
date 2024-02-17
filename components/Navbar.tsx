@@ -7,20 +7,28 @@ import Image from "next/image";
 import Link from "next/link";
 import {useActiveSectionContext} from "@/context/active-section-context";
 import {clsx} from "clsx";
-import { LuPlus } from "react-icons/lu";
+import {LuPlus} from "react-icons/lu";
 import StartProjectButton from "@/components/StartProjectButton";
+import NavMenu from "@/components/NavMenu/NavMenu";
 
 
 const Navbar = () => {
     const [hidden, setHidden] = useState(false)
+    const [scrollingDown, setScrollingDown] = useState(false)
     const {scrollY} = useScroll()
 
     useMotionValueEvent(scrollY, 'change', (latest) => {
         const previous = scrollY.getPrevious()
-        if (latest > previous! && latest > 49) {
+        if (latest > 40) {
             setHidden(true)
         } else {
             setHidden(false)
+        }
+
+        if (latest > previous!) {
+            setScrollingDown(true)
+        } else {
+            setScrollingDown(false)
         }
     })
     const {activeSection, setActiveSection, setTimeOfLastClick} = useActiveSectionContext();
@@ -57,18 +65,26 @@ const Navbar = () => {
         }),
     };
 
+    const sectionClasses: Record<string, string> = {
+        'About Us': 'bg-main/70',
+    };
+
+    console.log(activeSection)
+
     return (
         <motion.nav
-            className="z-50 fixed top-0 w-full px-12 text-primary-foreground py-12"
-            transition={{duration: 0.45, ease: "easeInOut"}} animate={hidden ? 'hidden' : 'visible'} variants={{visible: {y: 0}, hidden: {y: "-100%"}}}
+            className={clsx("z-50 fixed top-0 w-full px-16 text-primary-foreground transition-all duration-300", !hidden ? 'py-12' : 'py-4')}
+            /*            transition={{duration: 0.45, ease: "easeInOut"}} animate={hidden ? 'hidden' : 'visible'} variants={{visible: {y: 0}, hidden: {y: "-100%"}}}*/
         >
+            <div
+                className={clsx("absolute inset-0 -z-10 transition duration-300 backdrop-blur-md", hidden ? 'opacity-100' : 'opacity-0', scrollingDown && sectionClasses[activeSection] ? sectionClasses[activeSection] : 'bg-black/20')}/>
             <div className="flex items-center justify-between w-full mx-auto">
                 <Link href='/' className="flex gap-1.5 items-center">
                     <div className="relative overflow-hidden flex">
                         {/*
                         <Image alt="HundredLLC Logo" src={LogoImage} placeholder="blur" className="object-cover"/>
 */}
-                        <h1 className="text-2xl font-bold ">I00</h1>
+                        <h1 className="text-2xl font-bold">I00</h1>
                         <div className="border-r-[2.5px] pl-2 border-border"/>
                     </div>
                     <h1 className="text-2xl font-semibold uppercase flex gap-1 ">Hundred<span className="opacity-80 mt-1 text-xs font-mono">LLC</span></h1>
@@ -114,7 +130,12 @@ const Navbar = () => {
                         </motion.li>
                     ))}
                 </motion.ul>
-                <StartProjectButton/>
+                <div className="flex gap-4">
+                    <div className="w-24 relative">
+                        <NavMenu/>
+                    </div>
+                    <StartProjectButton/>
+                </div>
             </div>
         </motion.nav>
     );
